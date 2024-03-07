@@ -5,9 +5,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import route from "./routes/userRoute.js";
 import courseRoute from "./routes/courseRoute.js";
+import registerRouter from "./routes/registerRoutes.js";
 
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 dotenv.config();
@@ -26,6 +29,6 @@ mongoose.connect(URL).then(()=>{
 
 }).catch(error => console.log(error));
 
-
+app.use('/', registerRouter);
 app.use("/api", route);
 app.use("/course", courseRoute);
